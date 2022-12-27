@@ -14,18 +14,26 @@ let's say the key chosen is "HACK" and the message to be transferred is "Attack 
 To encrypt we put both the key and the message in a matrix. (As you may have observed there are whitespaces, we can replace them with "-" for instance)
 The matrix would look like:
 
-H A C K              
+H A C K
+
 A t t a
+
 c k - a
+
 t - d a
+
 w n - -
 
 we then re-organising the key in alphabetical order the key while maintaining the columns.
 
 A C H K
+
 t t A a
+
 k - c a
+
 - d t a
+
 n - w -
 
 we then read off the matrix column by column.
