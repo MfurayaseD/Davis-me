@@ -32,7 +32,7 @@ we then re-organising the key in alphabetical order the key while maintaining th
 
   k      -         c         a
 
-  .     d       t         a
+  .-     d       t         a
 
   n        -       w         -
 
