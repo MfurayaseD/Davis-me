@@ -1,11 +1,5 @@
 # Davis-me
-The code in this repository gives a user 4 options:
-1. Store the contents of user file to another file called system.txt
-2. Censor certain words that are chosen by the user in the user file and stores the result in system.txt
-3. Encrypts the contents of the user file and stores the result in system.txt
-4. Decrypts the contents of system.txt
-
-The encryption used is columnar transposition, a technique for encryption used by the US Army in world war I.
+The encryption used in the code above is columnar transposition, a technique for encryption used by the US Army in world war I.
 
 Columnar Transposition works by taking a key. The key is used for both encryption and decryption. For example:
 let's say the key chosen is "HACK" and the message to be transferred is "Attack at dawn"
@@ -40,3 +34,12 @@ The cipher text would be: tk-nt-d-Actwaaa-
 
 Decryption is just the complete reverse of the above. Re-organise the columns with the sorted key to spell the original key and read off row by row.
 Two files with the names system.txt and user.txt should be stored together with the main code in one folder to get the expected output.
+
+
+
+The code in this repository gives a user 4 options:
+1. Store the contents of user file to another file called system.txt
+2. Censor certain words that are chosen by the user in the user file and stores the result in system.txt
+3. Encrypts the contents of the user file and stores the result in system.txt
+4. Decrypts the contents of system.txt
+
