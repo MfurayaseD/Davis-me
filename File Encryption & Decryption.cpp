@@ -8,13 +8,14 @@
 
 using namespace std;
 
-fstream sys;
-ifstream file;
-string line;
-string text;
-string key;
-int append = 0;
+fstream sys;  // File stream for system file
+ifstream file; // File stream for user file
+string line;   // String to store each line read from file
+string text;   // String to store text read from file
+string key;    // String to store encryption/decryption key
+int append = 0; // Variable to store the number of characters appended for padding during encryption
 
+// Function to transpose a 2D vector
 vector<vector<char>> transpose(vector<vector<char>>& A) {
 	int rows = A.size();
 	if (rows == 0) return { {} };
@@ -29,6 +30,7 @@ vector<vector<char>> transpose(vector<vector<char>>& A) {
 	return r;
 }
 
+// Function to copy the contents of the user file into the system file
 void StoreUnchanged() {
 	file.open("user.txt");
 	sys.open("system.txt");
@@ -44,6 +46,7 @@ void StoreUnchanged() {
 	sys.close();
 }
 
+// Function to censor certain words in the user file and store the result in the system file
 void censor() {
 	string word;
 	string input;
@@ -93,7 +96,7 @@ void censor() {
 	sys.close();
 }
 
-
+// Function to encrypt the user file and store the result in the system file
 void encrypt() {
 	cout << "Enter the encryption key: ";
 	cin >> key;
@@ -157,15 +160,64 @@ void encrypt() {
 	}
 }
 
+// Function to decrypt the system file
 void decrypt() {
-	// decrypt
+    string decryptedText;
 
+    cout << "Enter the decryption key: ";
+    cin >> key;
+
+    file.open("system.txt");
+    if (file.is_open()) {
+        while (getline(file, text)) {
+            int column = key.size();
+            int row = text.size() / column;
+
+            vector<vector<char>> cipher(row, vector<char>(column));
+		
+            int idx = 0;
+            for (int i = 0; i < column; ++i) {
+                for (int j = 0; j < row; ++j) {
+                    cipher[j][i] = text[idx++];
+                }
+            }
+
+            // Reverse sorting process
+            sort(cipher.begin(), cipher.end());
+
+            // Transpose
+            cipher = transpose(cipher);
+
+            // Remove padding characters
+            for (int i = 0; i < cipher.size(); ++i) {
+                cipher[i].erase(cipher[i].begin() + cipher[i].size() - append, cipher[i].end());
+            }
+
+            // Construct decrypted text
+            for (int i = 0; i < cipher.size(); ++i) {
+                for (int j = 0; j < cipher[i].size(); ++j) {
+                    decryptedText += cipher[i][j];
+                }
+            }
+        }
+        file.close();
+
+        // Write decrypted text to console or file
+        //cout << "Decrypted text: " << decryptedText << endl;
+        // Or write to a file if needed
+	ofstream decryptedFile("decrypted.txt");
+        decryptedFile << decryptedText;
+        decryptedFile.close();
+    } else {
+        cout << "System file not found!" << endl;
+    }
 }
 
-
 int main() {
-	int option = 0;
-	string line;
+	int option = 0; // Variable to store user's option
+    	string line;    // String to store each line read from user input
+
+	// Display menu options
 	cout << "Enter a number 1-4 for the options below: " << endl;
 	cout << "1. Copy the contents of the user file into the system file." << endl;
 	cout << "2. Censor certain words in the user file and store the result in system file." << endl;
@@ -174,6 +226,7 @@ int main() {
 	cout << "Answer: ";
 	cin >> option;
 
+	// Perform actions based on user's option
 	switch (option)
 	{
 	case 1:
